@@ -9,7 +9,8 @@
     * *snippet.hs*
 
 ### Update
-	* Tuesday, 28 December 2021 16:01 PST
-	* Add AronLib.h
-	* Refactor the code
-		* Add a few functions
+
+* Tuesday, 28 December 2021 16:01 PST
+* Add AronLib.h
+* Refactor the code
+    * Add a few functions
