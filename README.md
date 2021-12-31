@@ -14,3 +14,10 @@
 * Add AronLib.h
 * Refactor the code
     * Add a few functions
+
+### UPDATE: Thu 30 Dec 16:30:06 2021 
+* Refactor the code to use Emacs TAGS file under *haskell-redis-index-snippet*
+```
+    # haskell-redis-index-snippet/TAGS
+    etags -e -f $PWD/TAGS $cpplib/AronLib.h $b/clib/AronCLibNew.h
+```

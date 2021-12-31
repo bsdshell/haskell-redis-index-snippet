@@ -235,10 +235,57 @@ showInfo cxx =  do
 redisExtractCppAronLib::String -> [String] -> [([String], Integer, [String])]
 redisExtractCppAronLib package cx = retMap 
     where
-       lt = captureCppFun cx
+       -- lt = captureCppFun cx
+       lt = extraTags cx
        rMap = zipWith(\n x -> (substr $ snd x, n, [fst x])) [40000..] lt 
        retMap = map (\ls -> (map(\x -> package ++ x) $ t1 ls, t2 ls, t3 ls)) rMap
        substr s = unique $ join $ allSubstr s
+
+{-|
+ 
+    @
+    [
+        ( "string removeIndex(string s, int inx) {"
+        , "removeIndex"
+        ),
+        ( "vector<T> removeIndex(vector<T>& vec, int inx){"
+        , "removeIndex"
+        ),
+        ( "vector<T> removeIndexRange(vector<T>& vec, int fromInx, int toInx){"
+        , "removeIndexRange"
+        )
+    ]
+    @
+
+    @
+        etags -e -f $PWD/TAGS $cpplib/AronLib.h $b/clib/AronCLibNew.h       
+               ↑ 
+               + -> has to be before '-f'
+    @
+
+ -}
+readTagsFile::FilePath -> IO [(String, String)]
+readTagsFile fp = do 
+        ls <- readFileList fp 
+        let lss = map (\s -> splitWhen(\x -> x == '\x7f' || x == '\x01') s) ls
+        let lstup = map (\s -> if len s == 3 then (head s, (head . tail) s) else ("", "")) lss
+        return $ filter (\(a, _) -> len a > 0) lstup
+
+{-|
+    === KEY: extra function from emacs TAGS file
+
+    @
+        etags -e -f $PWD/TAGS $cpplib/AronLib.h $b/clib/AronCLibNew.h       
+               ↑ 
+               + -> has to be before '-f'
+    @
+ -}
+extraTags::[String] -> [(String, String)]
+extraTags cs = filter (\(a, _) -> len a > 0) lt 
+    where
+      ls = map (\s -> splitWhen(\x -> x == '\x7f' || x == '\x01') s) cs 
+      lt = map (\s -> if len s == 3 then (head s, (head . tail) s) else ("", "")) ls 
+
 
 {-|
      === KEY: capture cpp function
@@ -257,6 +304,23 @@ redisExtractCppAronLib package cx = retMap
 
         vector<std::string> splitStrRegex(const string& s, string rgxStr = "\\s+") {
      @
+
+    @
+
+    captureCppFun::[String] -> [(String, String)]
+
+    [
+        ( "string removeIndex(string s, int inx) {"
+        , "removeIndex"
+        ),
+        ( "vector<T> removeIndex(vector<T>& vec, int inx){"
+        , "removeIndex"
+        ),
+        ( "vector<T> removeIndexRange(vector<T>& vec, int fromInx, int toInx){"
+        , "removeIndexRange"
+        )
+    ]
+    @
  -}
 captureCppFun::[String] -> [(String, String)]
 captureCppFun ls = filter (\(a, _) -> (len . trim) a > 0) $ map captureFun funls 
@@ -291,6 +355,7 @@ setRedisKeyValue cx = do
    mset m1 
    mset m2
 
+
 main = do 
        -- argList <- getArgs 
        -- if len argList == 0 then helpme else do
@@ -302,7 +367,21 @@ main = do
        haskellBlock <- readFileList $ home </> hname
        snippetBlock <- readSnippet $ home </> snippetF
 
-       cppBlock <- readFileList $ home </> cppfile 
+       -- cppBlock <- readFileList $ home </> cppfile 
+       -- TAGS file can be genrate by cpp_etags_emacs.sh
+       let tagsFile = "./TAGS"
+       b <- fileExist tagsFile 
+       unless b $ do 
+         print $ "ERROR: file does not exist:" ++ tagsFile
+         logFileG [
+                     "ERROR: $g/haskell-redis-index-snippet =>  ./TAGS does not exist",
+                     "Plz Generate TAGS file under $g/haskell-redis-index-snippet/",
+                     "Or run cpp_etags_emacs.sh"
+                  ]
+        
+       cppBlock <- fileExist tagsFile >>= \b -> b ? readFileList tagsFile $ return []
+
+       -- cppBlock <- readFileList "./TAGS" 
 
        let bs = "^[[:space:]]*(---){1,}[[:space:]]*" -- block delimiter
        let ws = "[,.<>;()/\\ ]"                      -- ws: word delimiter 

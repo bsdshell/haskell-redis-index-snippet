@@ -1,12 +1,12 @@
 /Users/aaa/myfile/github/haskell-redis-index-snippet/haskell-redis-index-snippet.cabal:
   hash: a47659e88b05a8794d2e453aaf105a67bbcab052d79c8d0fafea4407f92377d9
 /Users/aaa/myfile/github/haskell-redis-index-snippet/src/AronModule.hs:
-  hash: 523663ea83c4f92f057916762f15face5e361188374de0e66cc9941e39fc8f97
+  hash: 46c62116445a75dbac2b691266be97940e58b2b1d8e56268ad84d734f3032919
 /Users/aaa/.stack/programs/x86_64-osx/ghc-8.6.5/lib/ghc-8.6.5/include/ghcversion.h:
   hash: ca33eca9a5d6d6c3a4138d1ebf5808e19d48d89df6929099f6aaebd64ffe7843
 ? /Users/aaa/myfile/github/haskell-redis-index-snippet/.stack-work/dist/x86_64-osx/Cabal-2.4.0.1/build/haskell-redis-index-snippet/autogen/cabal_macros.h
 : hash: 620d531f96ab5b70627ba5de7ba30f1267ca2b9e8d56c4d83b42ba51552d0159
 /Users/aaa/myfile/github/haskell-redis-index-snippet/src/Main.hs:
-  hash: aba4badf5f76ae0780595d6fa8d327e237805b19165603905d18e13da3fc6618
+  hash: 089e3c63ed2131dfde030c5f7fb16f831c628669c07351fff272db03931ffcdd
 /Users/aaa/myfile/github/haskell-redis-index-snippet/README.md:
-  hash: b35f3f35408cd5994d36bd72b6666e80b12589e690d68463306c7c91ad95df35
+  hash: bcaeb0b6549577ebbdf940d1264f16220f68e3f1a2bf14bb1b85fb6def089bbb
