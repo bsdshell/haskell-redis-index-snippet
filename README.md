@@ -31,4 +31,7 @@
     int max(int a, int b, int c){max132,2815
     int max(int a, int b, int c, int d){max136,2878
     string reverseStr(string s){reverseStr140,2956
+                       ↓               ↓    
+  [("string reverseStr(string s){", "reverseStr")]
+       
 ```
