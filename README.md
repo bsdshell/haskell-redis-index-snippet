@@ -4,7 +4,7 @@
 * index files
     * *AronModule.hs*
     * *AronLib.h*
-    * *$b/clib/AronCLibNew.h
+    * *$b/clib/AronCLibNew.h*
     * *Aron.java*
     * *Print.java*
     * *snippet.hs*
