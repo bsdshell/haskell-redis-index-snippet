@@ -4,6 +4,7 @@
 * index files
     * *AronModule.hs*
     * *AronLib.h*
+    * *$b/clib/AronCLibNew.h
     * *Aron.java*
     * *Print.java*
     * *snippet.hs*
@@ -16,8 +17,11 @@
     * Add a few functions
 
 ### UPDATE: Thu 30 Dec 16:30:06 2021 
+# See *$scr/cpp_etags_emacs.sh*
 * Refactor the code to use Emacs TAGS file under *haskell-redis-index-snippet*
 ```
-    # haskell-redis-index-snippet/TAGS
+    # Tags file →  haskell-redis-index-snippet/TAGS
     etags -e -f $PWD/TAGS $cpplib/AronLib.h $b/clib/AronCLibNew.h
+           ↑ 
+           + -> -e must be before -f
 ```
