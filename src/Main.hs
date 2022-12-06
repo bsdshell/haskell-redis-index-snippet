@@ -183,109 +183,12 @@ showInfo cxx =  do
                 fw "-"
                 let ls = [testFile, jAron, jPrint, hname, cppfile]
                 let ss = zip ls cxx
-                mapM_ (\x -> print $ (fst x) ++ " => " ++ (show $ len $ snd x)) ss
+                mapM_ (\x -> printBox 2 $ [(fst x) ++ " => " ++ (show $ len $ snd x)] ) ss
                 lfile <- getEnv "b" >>= \x -> return $ x </> "publicfile/log" </> "global.log"
                 
                 mapM_ (\x -> logFile2 lfile [fst x ++ " => " ++ (show $ len $ snd x) ++ "\n"]) ss
                 putStrLn $ "log file => [" ++ lfile ++ "]"
                 return ()
-
-
-{-|
-    === KEY: Generate [([String], Integer, [String])] from 'captureCppFun'
-
-    @ 
-    [(
-        [ "AronLib.e"
-        , "AronLib.ew"
-        , "AronLib.ewl"
-        , "AronLib.ewli"
-        , "AronLib.ewlin"
-        , "AronLib.ewline"
-        , "AronLib.i"
-        , "AronLib.in"
-        , "AronLib.ine"
-        , "AronLib.l"
-        , "AronLib.li"
-        , "AronLib.lin"            <-  [String]
-        , "AronLib.line"
-        , "AronLib.n"
-        , "AronLib.ne"
-        , "AronLib.new"
-        , "AronLib.newl"
-        , "AronLib.newli"
-        , "AronLib.newlin"
-        , "AronLib.newline"
-        , "AronLib.w"
-        , "AronLib.wl"
-        , "AronLib.wli"
-        , "AronLib.wlin"
-        , "AronLib.wline"
-        ]
-    , 40007                        <- Integer
-    , [ "void newline(){" ]        <- [String]
-    )
-    ]
-    @ 
-
-    @
-    [([String], Integer, [String])]
-    @
- -}
-redisExtractCppAronLib::String -> [String] -> [([String], Integer, [String])]
-redisExtractCppAronLib package cx = retMap 
-    where
-       -- lt = captureCppFun cx
-       lt = extraTags cx
-       rMap = zipWith(\n x -> (substr $ snd x, n, [fst x])) [40000..] lt 
-       retMap = map (\ls -> (map(\x -> package ++ x) $ t1 ls, t2 ls, t3 ls)) rMap
-       substr s = unique $ join $ allSubstr s
-
-{-|
- 
-    @
-    [
-        ( "string removeIndex(string s, int inx) {"
-        , "removeIndex"
-        ),
-        ( "vector<T> removeIndex(vector<T>& vec, int inx){"
-        , "removeIndex"
-        ),
-        ( "vector<T> removeIndexRange(vector<T>& vec, int fromInx, int toInx){"
-        , "removeIndexRange"
-        )
-    ]
-    @
-
-    @
-        etags -e -f $PWD/TAGS $cpplib/AronLib.h $b/clib/AronCLibNew.h       
-               ↑ 
-               + -> has to be before '-f'
-    @
-
- -}
-readTagsFile::FilePath -> IO [(String, String)]
-readTagsFile fp = do 
-        ls <- readFileList fp 
-        let lss = map (\s -> splitWhen(\x -> x == '\x7f' || x == '\x01') s) ls
-        let lstup = map (\s -> if len s == 3 then (head s, (head . tail) s) else ("", "")) lss
-        return $ filter (\(a, _) -> len a > 0) lstup
-
-{-|
-    === KEY: extra function from emacs TAGS file
-
-    @
-        etags -e -f $PWD/TAGS $cpplib/AronLib.h $b/clib/AronCLibNew.h       
-               ↑ 
-               + -> has to be before '-f'
-    @
- -}
-extraTags::[String] -> [(String, String)]
-extraTags cs = filter (\(a, _) -> len a > 0) lt 
-    where
-      ls = map (\s -> splitWhen(\x -> x == '\x7f' || x == '\x01') s) cs 
-      lt = map (\s -> if len s == 3 then (head s, (head . tail) s) else ("", "")) ls 
-
 
 {-|
      === KEY: capture cpp function

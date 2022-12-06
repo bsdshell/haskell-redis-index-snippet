@@ -17,7 +17,11 @@
 #
 # resolver: ./custom-snapshot.yaml
 # resolver: https://example.com/snapshots/2018-01-01.yaml
-resolver: lts-13.28
+# ERROR: build error on Big Sur
+# resolver: lts-13.28
+
+# ghc-8.10.3
+resolver: lts-17.3
 
 # User packages to be built.
 # Various formats can be used as shown in the example below.
@@ -48,14 +52,43 @@ packages:
 extra-deps:
 - wai-util-0.8
 - http-accept-0.2 
-- GLFW-0.5.2.5
 - mini-egison-1.0.0
-- egison-pattern-src-0.2.1.0
-- egison-pattern-src-th-mode-0.2.1.0
+# - egison-pattern-src-0.2.1.0
+# - egison-pattern-src-th-mode-0.2.1.0
 - FTGL-2.1
 - pretty-terminal-0.1.0.0
 - strict-io-0.2.2
 - ghci-websockets-0.0.2
+
+- megaparsec-8.0.0
+- mysql-haskell-0.8.4.3
+#- prettyprinter-1.6.2
+- recursion-schemes-5.2.2.1
+- wai-predicates-1.0.0
+
+- active-0.2.0.15
+- dual-tree-0.2.3.0
+- monoid-extras-0.6
+# - prettyprinter-1.7.1
+- svg-builder-0.1.1
+- tcp-streams-1.0.1.1
+# - th-abstraction-0.3.2.0
+- wire-streams-0.1.1.0
+- th-abstraction-0.4.3.0
+- prettyprinter-1.7.1
+- newtype-generics-0.6
+- force-layout-0.4.0.6
+- bytestring-trie-0.2.5.2
+
+- juicy-draw-0.2.0.0
+
+- diagrams-1.4.0.1
+- diagrams-lib-1.4.4
+- diagrams-svg-1.4.3
+
+- diagrams-contrib-1.4.4
+- diagrams-core-1.5.0
+- orthotope-0.1.0.0
 
 # flags: {}
 
