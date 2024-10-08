@@ -291,33 +291,30 @@ main = do
         
        cppBlock <- fileExist tagsFile >>= \b -> b ? readFileList tagsFile $ return []
 
-       -- cppBlock <- readFileList "./TAGS" 
-
        let bs = "^[[:space:]]*(---){1,}[[:space:]]*" -- block delimiter
        let ws = "[,.<>;()/\\ ]"                      -- ws: word delimiter 
        conn <- connect defaultConnectInfo
        runRedis conn $ do
 
                        let haskellls = redisExtractAronModule "AronModule." haskellBlock 
+                       -- let haskellls = take 50 haskellls_xxx 
                        setRedisKeyValue haskellls 
 
+                       
                        let javals = redisExtractJavaMethod "Aron." jAronBlock 
                        setRedisKeyValue javals 
 
                        let printls = redisExtractJavaMethodWithPackage "Print." jPrintBlock
                        setRedisKeyValue printls 
-
+                       
                      
                        -- Tue 18 Jul 00:57:57 2023 
                        -- NOTE: snippet is in sqlite3 db now, snippet file is not longer been used.
                        -- SEE: sqlite3 haskellwebapp2_sqlite3.db 
                        -- let snippetls = redisExtractSnippet snippetBlock
                        -- setRedisKeyValue snippetls 
-
                        let cppls = redisExtractCppAronLib "AronLib." cppBlock 
                        setRedisKeyValue cppls 
-
-                       -- set (strToStrictByteString "key1")  (strToStrictByteString "val1") 
                        return ()
         
        showInfo [fblock, jAronBlock, jPrintBlock, haskellBlock, cppBlock]

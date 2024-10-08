@@ -1,5 +1,5 @@
-#!/bin/bash
-
+#!/usr/local/bin/bash
+#
 #================================================================================ 
 # Last Upate: Fri Oct  7 12:39:43 PDT 2016 
 # Tue Nov 15 00:08:03 PST 2016  - add rsync, home dotfile to GoogleDrive/homedotfile

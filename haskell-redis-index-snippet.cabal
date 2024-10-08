@@ -19,7 +19,7 @@ executable             haskell-redis-index-snippet
   ghc-options:         -O2
   cpp-options:         -DTEST
   default-language:    Haskell2010
-  c-sources:           /Users/aaa/myfile/bitbucket/haskellffi/AronCLibFFI.c
+  c-sources:           /Users/cat/myfile/bitbucket/haskellffi/AronCLibFFI.c
   build-depends:       base >= 4.7 && < 5,
                        regex-compat,
                        unix,
@@ -104,6 +104,7 @@ executable             haskell-redis-index-snippet
                        orthotope,
                        ascii-char,
                        transformers,
+                       silently,
                        hxt,
                        mtl
 
